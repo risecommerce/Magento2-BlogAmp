@@ -1,0 +1,62 @@
+<?php
+/**
+ * Copyright © Risecommerce (support@risecommerce.com). All rights reserved.
+ * 
+ *
+ * Glory to Ukraine! Glory to the heroes!
+ */
+?>
+<?php
+/**
+ * Blog related posts template
+ *
+ * @var $block \Risecommerce\Blog\Block\Post\View\RelatedProducts
+ */
+?>
+
+<?php
+if ($exist = $block->getItems()->getSize() && $this->displayProducts()) {
+    $type = 'related';
+    $class = $type;
+
+    $image = 'related_products_list';
+    $title = __('Related Products');
+    $items = $block->getItems();
+}
+?>
+<?php if ($exist) : ?>
+<div class="amp-product-items-block">
+    <div class="block items-block items-block-<?php /* @escapeNotVerified */ echo $class; ?> <?php echo $class; ?>">
+        <div class="block-title title">
+            <strong id="block-<?php echo $class?>-heading" role="heading" aria-level="2"><?php echo $title; ?></strong>
+        </div>
+        <amp-carousel height="300" width="300" layout="responsive" type="slides" autoplay delay="5000">
+            <?php foreach ($items as $_item) : ?>
+                <?php
+                /**
+                 * Get product data
+                 */
+                $_productName = $block->escapeHtml($_item->getName());
+                $_productUrl = /* @escapeNotVerified */ $block->getProductUrl($_item);
+
+                /**
+                 * Get product image and set amp-image template
+                 */
+                $_productImage = $block->getImage($_item, 'pr_amp_sliders');
+                $_productImage->setCustomAttributes('layout="responsive"');
+                $_productImage->setTemplate('Plumrocket_Amp::catalog/product/image.phtml');
+                ?>
+                <div class="item-content">
+                    <a class="item-image" href="<?php echo $_productUrl ?>" title="<?php echo $_productName ?>">
+                        <?php echo $_productImage->toHtml() ?>
+                    </a>
+                    <a class="item-detail" href="<?php echo $_productUrl ?>" title="<?php echo $_productName ?>">
+                        <span class="item-name"><?php echo $_productName ?></span>
+                        <span class="item-price"><?php /* @escapeNotVerified */ echo $block->getProductPrice($_item); ?></span>
+                    </a>
+                </div>
+            <?php endforeach; ?>
+        </amp-carousel>
+    </div>
+</div>
+<?php endif; ?>
