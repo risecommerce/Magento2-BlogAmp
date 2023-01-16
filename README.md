@@ -16,7 +16,7 @@ Method II)
 
 Using Composer 
 
-composer require risecommerce/module-blog-amp
+composer require risecommerce/module-blog-amp:1.0.1
 
 #Enable Extension:
 - php bin/magento module:enable Risecommerce_BlogAmp
